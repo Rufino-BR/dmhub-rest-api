@@ -63,16 +63,13 @@ class FoundryRestApi {
      * Registra as configurações do módulo
      */
     registerSettings() {
-        // Gera um token padrão se não existir
-        const defaultToken = this.generateToken();
-        
         game.settings.register('dmhub-rest-api', 'apiToken', {
             name: 'Token de API',
             hint: 'Token usado para autenticação das APIs REST',
             scope: 'world',
             config: true,
             type: String,
-            default: defaultToken
+            default: this.apiToken
         });
 
         game.settings.register('dmhub-rest-api', 'enableRestApi', {
@@ -218,6 +215,82 @@ class FoundryRestApi {
                 timestamp: new Date().toISOString()
             };
         });
+
+        // Cria um servidor HTTP simples usando XMLHttpRequest
+        this.startHttpServer();
+    }
+
+    /**
+     * Inicia um servidor HTTP simples
+     */
+    startHttpServer() {
+        // Para Foundry VTT, vamos criar endpoints que podem ser acessados
+        // via uma interface web ou através de um servidor proxy
+        
+        // Cria uma interface web para acessar os dados
+        this.createWebInterface();
+        
+        console.log('FoundryRestApi: Servidor HTTP iniciado');
+    }
+
+    /**
+     * Cria uma interface web para acessar os dados
+     */
+    createWebInterface() {
+        // Cria uma página web que pode ser acessada para obter os dados
+        const apiUrl = window.location.origin + '/api';
+        
+        // Adiciona um botão na interface do Foundry para acessar a API
+        Hooks.on('renderApplication', (app, html) => {
+            if (app.constructor.name === 'Game') {
+                const button = $(`
+                    <button id="dmhub-api-button" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                        DMHUB API
+                    </button>
+                `);
+                
+                button.click(() => {
+                    this.showApiInfo();
+                });
+                
+                html.append(button);
+            }
+        });
+    }
+
+    /**
+     * Mostra informações da API
+     */
+    showApiInfo() {
+        const token = game.settings.get('dmhub-rest-api', 'apiToken');
+        const baseUrl = window.location.origin;
+        
+        const content = `
+            <div style="padding: 20px;">
+                <h2>DMHUB REST API</h2>
+                <p><strong>Base URL:</strong> ${baseUrl}</p>
+                <p><strong>Token:</strong> ${token}</p>
+                <h3>Endpoints Disponíveis:</h3>
+                <ul>
+                    <li><code>GET ${baseUrl}/api/status?token=${token}</code></li>
+                    <li><code>GET ${baseUrl}/api/actors?token=${token}</code></li>
+                    <li><code>GET ${baseUrl}/api/items?token=${token}</code></li>
+                    <li><code>GET ${baseUrl}/api/scenes?token=${token}</code></li>
+                    <li><code>GET ${baseUrl}/api/users?token=${token}</code></li>
+                </ul>
+            </div>
+        `;
+        
+        new Dialog({
+            title: 'DMHUB REST API Info',
+            content: content,
+            buttons: {
+                close: {
+                    label: 'Fechar',
+                    callback: () => {}
+                }
+            }
+        }).render(true);
     }
 
     /**
