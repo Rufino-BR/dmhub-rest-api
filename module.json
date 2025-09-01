@@ -7,7 +7,7 @@
       "name": "DMHUB Team"
     }
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": {
     "minimum": "10",
     "verified": "11"
@@ -17,5 +17,5 @@
   ],
   "url": "https://github.com/Rufino-BR/dmhub-rest-api",
   "manifest": "https://raw.githubusercontent.com/Rufino-BR/dmhub-rest-api/main/module.json",
-  "download": "https://raw.githubusercontent.com/Rufino-BR/dmhub-rest-api/main/dmhub-rest-api-v1.0.0.zip"
+  "download": "https://raw.githubusercontent.com/Rufino-BR/dmhub-rest-api/main/dmhub-rest-api-v1.0.1.zip"
 }
