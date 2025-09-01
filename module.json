@@ -1,0 +1,21 @@
+{
+  "id": "dmhub-rest-api",
+  "title": "DMHUB REST API",
+  "description": "Módulo DMHUB que expõe APIs REST para integração externa com o Foundry VTT",
+  "authors": [
+    {
+      "name": "DMHUB Team"
+    }
+  ],
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "11"
+  },
+  "scripts": [
+    "dmhub-rest-api.js"
+  ],
+  "url": "https://github.com/Rufino-BR/dmhub-rest-api",
+  "manifest": "https://raw.githubusercontent.com/Rufino-BR/dmhub-rest-api/main/module.json",
+  "download": "https://raw.githubusercontent.com/Rufino-BR/dmhub-rest-api/main/dmhub-rest-api-v1.0.0.zip"
+}
