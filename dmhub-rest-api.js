@@ -63,13 +63,16 @@ class FoundryRestApi {
      * Registra as configurações do módulo
      */
     registerSettings() {
+        // Gera um token padrão se não existir
+        const defaultToken = this.generateToken();
+        
         game.settings.register('dmhub-rest-api', 'apiToken', {
             name: 'Token de API',
             hint: 'Token usado para autenticação das APIs REST',
             scope: 'world',
             config: true,
             type: String,
-            default: this.apiToken
+            default: defaultToken
         });
 
         game.settings.register('dmhub-rest-api', 'enableRestApi', {
